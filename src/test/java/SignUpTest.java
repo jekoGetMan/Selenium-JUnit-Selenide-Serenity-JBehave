@@ -8,8 +8,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import java.util.concurrent.TimeUnit;
 
 public class SignUpTest {
-    WebDriver driver;
-    SignUpPage page;
+    private WebDriver driver;
+    private SignUpPage page;
 
     @Before
     public void setUp() {
@@ -24,7 +24,7 @@ public class SignUpTest {
     @Test
     public void typeInvalidYear() {
         page = new SignUpPage(driver);
-        page.setMonth("5")
+        page.setMonth("December")
                 .typeDay("20")
                 .typeYear("85")
                 .setShare(true);
@@ -33,6 +33,38 @@ public class SignUpTest {
     }
 
     @Test
+    public void typeInvalidEmail() {
+        page = new SignUpPage(driver);
+        page.typeName("test@gmail.com")
+                .typeConfirmEmail("wrong@gmail.com")
+                .typeName("Testname")
+                .clickSignUpButton();
+        Assert.assertTrue(page.isErrorVisible("Email address doesn't match."));
+    }
+
+    @Test
+    public void signUpWithEmptyPassword() {
+        page = new SignUpPage(driver);
+        page.typeEmail("test@gmail.com")
+                .typeConfirmEmail("test@gmail.com")
+                .typeName("Testname")
+                .clickSignUpButton();
+        Assert.assertTrue(page.isErrorVisible("Please choose a password."));
+    }
+
+    @Test
+    public void typeInvalidValue() {
+        page = new SignUpPage(driver);
+        page.typeEmail("testmail")
+                .typeConfirmEmail("wrong@test.com")
+                .typePassword("qweqwe!123")
+                .typeName("name")
+                .setSex("Male")
+                .setShare(false)
+                .clickSignUpButton();
+        Assert.assertEquals(6, page.getErrors().size());
+        Assert.assertEquals("Please enter your birth month.", page.getErrorByNumber(3));
+    }
 
     @After
     public void tearDown() {

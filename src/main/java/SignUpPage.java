@@ -21,13 +21,13 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElem
         private By nameField = By.xpath("//*[@id=\"register-displayname\"]");
         private By monthDropDown = By.cssSelector("#register-dob-month");
         String monthDropDownOption = "//select[@id='register-dob-month']//option[text()='%s']";
-        private By dayField = By.cssSelector("//*[@id=\"register-dob-day\"]");
+        private By dayField = By.cssSelector("#register-dob-day");
         private By Year = By.cssSelector("#register-dob-year");
-        String sexRadioButton = "//li[@id='li-gender']//label[normalize-space()='%s']//input";
-        private By shareCheckBox = By.cssSelector("//*[@id=\"li-thirdparty\"]/label");
+        String sexRadioButton = "//li[@id=\"li-gender\"]//label[normalize-space()=\"%s\"]//input";
+        private By shareCheckBox = By.cssSelector("#li-thirdparty > label");
         private By registerButton = By.xpath("//*[@id=\"register-button-email-submit\"]");
         private By errorLabel = By.xpath("//label[@class='has-error' and string-length(text())>0]");
-        String errorByText = "//label[@class='has-error' and text()='%s']"; // локатор ошибки в зависимости от текста ошибки
+        String errorByText = "//label[@class=\"has-error\" and text()=\"%s\"]"; // локатор ошибки в зависимости от текста ошибки
 
 
         public SignUpPage typeEmail(String email) {
